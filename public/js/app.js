@@ -2147,8 +2147,8 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.withCredentials = true;
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true;
 window.moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -2206,7 +2206,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var commit = _ref.commit;
       //console.log(credenciales)
       //return;
-      axios.get('/csrf-cookie').then(function (response) {
+      axios.get('/sanctum/csrf-cookie').then(function (response) {
         var resp = axios.post('/api/signin', credenciales).then(function (res) {
           console.log(res);
           commit("SET_USER", res.data);

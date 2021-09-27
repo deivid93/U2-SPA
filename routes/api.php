@@ -17,13 +17,14 @@ use Illuminate\Http\Response;
 */
 
 Route::post('/signin', [AuthenticationController::class, 'signin'])->name('signin');
+Route::post('/signout', [AuthenticationController::class, 'signout'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/pedidos', [AuthenticationController::class, 'pedidos']);
 Route::post('/proveedores', [AuthenticationController::class, 'proveedores']);
 Route::get('/pedidosAll', [AuthenticationController::class, 'pedidosAll']);
-Route::post('/signout', [AuthenticationController::class, 'signout']);        
+
 
 
 

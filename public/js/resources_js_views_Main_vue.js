@@ -197,35 +197,31 @@ Vue.component('date-picker', (v_calendar_lib_components_date_picker_umd__WEBPACK
     };
   },
   created: function created() {
-    this.isBuscar = true, this.isPreparacion = false, this.token = localStorage.getItem('user');
-  },
-  mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/pedidosAll').then(function (res) {
+    this.isBuscar = true, this.isPreparacion = false, this.token = localStorage.getItem('user');
+    axios.get('/api/user').then(function (res) {
       _this.total_pedidos = res.data.pedidos;
       console.log(_this.total_pedidos);
     });
   },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('/api/pedidosAll').then(function (res) {
+      _this2.total_pedidos = res.data.pedidos;
+      console.log(_this2.total_pedidos);
+    });
+  },
   methods: {
     logout: function logout() {
-      var _this2 = this;
+      var _this3 = this;
 
-      var token = this.token;
-      var config = {
-        withCredentials: true,
-        headers: {
-          Authorization: "Bearer ".concat(token)
-        }
-      };
-      axios.get('/api/csrf-cookie').then(function (response) {
-        console.log(response);
-        axios.post('/api/signout').then(function (res) {
-          console.log(res);
-          localStorage.removeItem('user');
+      axios.post('/api/signout').then(function (res) {
+        console.log(res);
+        localStorage.removeItem('user');
 
-          _this2.$router.push("/login");
-        });
+        _this3.$router.push("/login");
       });
     },
     buscar: function buscar() {
@@ -237,7 +233,7 @@ Vue.component('date-picker', (v_calendar_lib_components_date_picker_umd__WEBPACK
       this.isPreparacion = true;
     },
     buscarPedido: function buscarPedido() {
-      var _this3 = this;
+      var _this4 = this;
 
       var dia, mes, fecha;
       this.date.getDate() < 10 ? dia = '0' + this.date.getDate() : dia = this.date.getDate();
@@ -256,14 +252,14 @@ Vue.component('date-picker', (v_calendar_lib_components_date_picker_umd__WEBPACK
           fecha: fecha
         }).then(function (response) {
           //console.log(response.data.pedidos);
-          _this3.pedidos = response.data.pedidos;
+          _this4.pedidos = response.data.pedidos;
         })["catch"](function (error) {
           console.log(error);
         });
       });
     },
     buscarInventario: function buscarInventario() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.proveedores = '';
       var token = this.token;
@@ -275,23 +271,23 @@ Vue.component('date-picker', (v_calendar_lib_components_date_picker_umd__WEBPACK
       };
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         axios.post('/api/pedidos', {
-          id: _this4.selected
+          id: _this5.selected
         }).then(function (response) {
-          _this4.id_pedido = response.data.pedidos;
+          _this5.id_pedido = response.data.pedidos;
         })["catch"](function (error) {
           console.log(error);
         });
       });
     },
     searchProveedor: function searchProveedor(producto_id) {
-      var _this5 = this;
+      var _this6 = this;
 
       console.log(producto_id);
       axios.get('/sanctum/csrf-cookie').then(function (response) {
         axios.post('/api/proveedores', {
           producto: producto_id
         }).then(function (response) {
-          _this5.proveedores = response.data.proveedores;
+          _this6.proveedores = response.data.proveedores;
         })["catch"](function (error) {
           console.log(error);
         });

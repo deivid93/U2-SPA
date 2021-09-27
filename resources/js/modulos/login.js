@@ -17,7 +17,7 @@ export default {
         login( { commit }, credenciales){
             //console.log(credenciales)
             //return;
-             axios.get('/csrf-cookie').then(response => {
+             axios.get('/sanctum/csrf-cookie').then(response => {
                   const resp =  axios.post('/api/signin', credenciales).then(res => {
                        console.log(res)
                         commit("SET_USER", res.data )

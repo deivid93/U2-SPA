@@ -184,6 +184,10 @@
             this.isBuscar = true,
             this.isPreparacion = false,
             this.token = localStorage.getItem('user')
+            axios.get('/api/user').then(res => {
+                        this.total_pedidos = res.data.pedidos
+                        console.log(this.total_pedidos);
+                    });
 
         },
         mounted(){
@@ -194,21 +198,11 @@
         },
        methods: {
             logout(){
-                const token = this.token;
-                const config = {
-                    withCredentials: true,
-                    headers: { Authorization: `Bearer ${token}` }
-                };  
-
-                axios.get('/api/csrf-cookie').then(response => {
-                    console.log(response);
-                    axios.post('/api/signout').then(res => {
-                        console.log(res);
-                        localStorage.removeItem('user')
-                        this.$router.push("/login")    
-                    });
+                axios.post('/api/signout').then(res => {
+                    console.log(res);
+                    localStorage.removeItem('user')
+                    this.$router.push("/login")    
                 });
-                
             },
             buscar(){
                 this.isBuscar = true
