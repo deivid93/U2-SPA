@@ -170,7 +170,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 Vue.component('calendar', (v_calendar_lib_components_calendar_umd__WEBPACK_IMPORTED_MODULE_0___default()));
@@ -183,6 +182,8 @@ Vue.component('date-picker', (v_calendar_lib_components_date_picker_umd__WEBPACK
   name: 'Main',
   data: function data() {
     return {
+      href_buscar: false,
+      href_preparacion: true,
       isBuscar: false,
       isPreparacion: false,
       fecha_entrega: '',
@@ -227,10 +228,14 @@ Vue.component('date-picker', (v_calendar_lib_components_date_picker_umd__WEBPACK
     buscar: function buscar() {
       this.isBuscar = true;
       this.isPreparacion = false;
+      this.href_buscar = false;
+      this.href_preparacion = true;
     },
     preparacion: function preparacion() {
       this.isBuscar = false;
       this.isPreparacion = true;
+      this.href_buscar = true;
+      this.href_preparacion = false;
     },
     buscarPedido: function buscarPedido() {
       var _this4 = this;
@@ -41191,21 +41196,56 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _c("ol", { staticClass: "breadcrumb" }, [
-          _c(
-            "li",
-            { staticClass: "breadcrumb-item", on: { click: _vm.buscar } },
-            [_c("a", {}, [_vm._v("Buscar Pedidos")])]
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            { staticClass: "breadcrumb-item", on: { click: _vm.preparacion } },
-            [_c("a", {}, [_vm._v("Preparacion de Pedidos")])]
-          ),
-          _vm._v(" "),
-          _c("li", { staticClass: "breadcrumb-item" }, [
-            _c("a", { on: { click: _vm.logout } }, [_vm._v("Cerrar Sesion")])
+        _c("nav", { attrs: { "aria-label": "breadcrumb" } }, [
+          _c("ol", { staticClass: "breadcrumb" }, [
+            _c(
+              "li",
+              {
+                staticClass: "breadcrumb-item",
+                class: { active: !_vm.href_buscar }
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: _vm.href_buscar },
+                    on: { click: _vm.buscar }
+                  },
+                  [_vm._v("Buscar Pedidos")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "breadcrumb-item",
+                class: { active: !_vm.href_preparacion }
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: _vm.href_preparacion },
+                    on: { click: _vm.preparacion }
+                  },
+                  [_vm._v("Preparacion de Pedidos")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              { staticClass: "item ml-auto" },
+              [
+                _c(
+                  "v-icon",
+                  { attrs: { name: "mdi-logout" }, on: { click: _vm.logout } },
+                  [_vm._v("mdi-logout")]
+                )
+              ],
+              1
+            )
           ])
         ]),
         _vm._v(" "),
@@ -41267,7 +41307,7 @@ var render = function() {
                     ? _c(
                         "div",
                         _vm._l(_vm.pedidos, function(pedido) {
-                          return _c("div", [
+                          return _c("div", { key: pedido.id }, [
                             _c("div", { staticClass: "caption" }, [
                               _c(
                                 "h3",
@@ -41303,7 +41343,7 @@ var render = function() {
                                     _vm._l(pedido.productos, function(
                                       producto
                                     ) {
-                                      return _c("div", [
+                                      return _c("div", { key: producto.id }, [
                                         _c("div", { staticClass: "caption" }, [
                                           _c("h3", [
                                             _c("b", [_vm._v("ID PRODUCTO: ")]),
@@ -41432,7 +41472,7 @@ var render = function() {
                             _vm._l(_vm.total_pedidos, function(p) {
                               return _c(
                                 "option",
-                                { domProps: { value: p.id } },
+                                { key: p.id, domProps: { value: p.id } },
                                 [_vm._v(_vm._s(p.id))]
                               )
                             })
@@ -41458,7 +41498,7 @@ var render = function() {
                     ? _c(
                         "div",
                         _vm._l(_vm.id_pedido, function(pedido) {
-                          return _c("div", [
+                          return _c("div", { key: pedido.id }, [
                             _c("div", { staticClass: "caption" }, [
                               _c(
                                 "h3",
@@ -41494,7 +41534,7 @@ var render = function() {
                                     _vm._l(pedido.productos, function(
                                       producto
                                     ) {
-                                      return _c("div", [
+                                      return _c("div", { key: producto.id }, [
                                         _c("div", { staticClass: "caption" }, [
                                           _c("div", { staticClass: "row" }, [
                                             _c(
